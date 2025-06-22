@@ -1,8 +1,18 @@
 local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
-task.delay(12, function()
-	if player.Character then
-		player:LoadCharacter()
-	end
-end)
+task.wait(12)
+
+local character = player.Character or player.CharacterAdded:Wait()
+local hrp = character:WaitForChild("HumanoidRootPart")
+local humanoid = character:WaitForChild("Humanoid")
+
+local pos1 = Vector3.new(-70, -28, 162)
+local pos2 = Vector3.new(-70, -5, 162)
+local toggle = true
+
+while humanoid.Health > 0 do
+	hrp.CFrame = CFrame.new(toggle and pos1 or pos2)
+	toggle = not toggle
+	task.wait(0.0020)
+end
